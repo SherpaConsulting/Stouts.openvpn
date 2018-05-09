@@ -1,0 +1,11 @@
+- hosts: ubuntu_router
+  become: yes
+
+  roles:
+  - ../roles/openvpn
+
+  vars:
+    openvpn_use_pam: yes
+    openvpn_clients: [kentt,eystein,emir,lars]
+    openvpn_use_pam_users:
+    - { name: deployer, password: "{{ awx_admin_pass }}" }

@@ -1,22 +1,25 @@
 ---
 
 openvpn_enabled: yes                                # The role is enabled
+openvpn_version: "2.4"
 
 openvpn_etcdir: /etc/openvpn
 openvpn_keydir: "{{openvpn_etcdir}}/keys"
 
+openvpn_management_port: 80
+
 # Installation settings
-openvpn_use_external_repo: false                    # Enable upstream OpenVPN repository
-openvpn_use_system_easyrsa: false                   # Install EasyRSA from system packages
+openvpn_use_external_repo: true                 # Enable upstream OpenVPN repository
+openvpn_use_system_easyrsa: true                   # Install EasyRSA from system packages
 
 # Default settings (See OpenVPN documentation)
-openvpn_host: "{{inventory_hostname}}"              # The server address
+openvpn_host: "{{ router_fqdn }}"              # The server address
 openvpn_port: 1194
 openvpn_proto: udp
 openvpn_dev: tun
 openvpn_server: 10.8.0.0 255.255.255.0              # Set empty for skip
 openvpn_bridge: {}
-openvpn_max_clients: 100
+openvpn_max_clients: 10
 openvpn_log: /var/log/openvpn.log                   # Log's directory
 openvpn_keepalive: "10 120"
 openvpn_ifconfig_pool_persist: ipp.txt
@@ -30,8 +33,9 @@ openvpn_user: nobody
 openvpn_group: nogroup
 openvpn_resolv_retry: infinite
 openvpn_client_to_client: yes
-openvpn_server_options: []                          # Additional server options
-                                                    # openvpn_server_options:
+openvpn_server_options:
+  - management {{ router_fqdn }} {{ openvpn_management_port }}  # Additional server options
+                                                                # openvpn_server_options:
                                                     # - dev-node MyTap
                                                     # - client-to-client
 openvpn_client_options: []                          # Additional client options
@@ -39,12 +43,13 @@ openvpn_client_options: []                          # Additional client options
                                                     # - dev-node MyTap
                                                     # - client-to-client
 
-openvpn_key_country: US
-openvpn_key_province: CA
-openvpn_key_city: SanFrancisco
-openvpn_key_org: Fort-Funston
-openvpn_key_email: me@myhost.mydomain
-openvpn_key_size: 1024
+openvpn_key_country: "NO"
+openvpn_key_province: "OSL"
+openvpn_key_city: "Oslo"
+openvpn_key_org: "DSB"
+openvpn_key_email: "ken.tallakstad@dsb.no"
+openvpn_key_ou: "IT"
+openvpn_key_size: 2048
 
 openvpn_clients: [client]                         # Make clients certificate
 openvpn_clients_revoke: []                        # Revoke clients certificates
@@ -66,4 +71,5 @@ openvpn_simple_auth: no
 openvpn_simple_auth_password: ""
 
 # Whether to embed CA, cert, and key info inside client OVPN config file.
-openvpn_unified_client_profiles: no
+openvpn_unified_client_profiles: yes
+openvpn_client_config_dir: /etc/openvpn/clients
