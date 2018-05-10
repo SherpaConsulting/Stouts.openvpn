@@ -1,5 +1,5 @@
 ---
-- include_vars: "~/repos/ansible-inventory/DSB/encrypted/babelfisk.yml" #encrypted
+- include_vars: "~/repos/ansible-inventory/DSB/encrypted/ibm_openvpn.yml" #encrypted
 
 - name: Add OpenVPN repo GPG key
   apt_key:

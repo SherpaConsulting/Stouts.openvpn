@@ -16,6 +16,7 @@ proto {{ openvpn_proto }}
 
 # Encrypt packets with cipher algorithm
 cipher {{ openvpn_cipher }}
+auth SHA256
 
 # "dev tun" will create a routed IP tunnel, "dev tap" will create an ethernet
 # tunnel. Use "dev tap0" if you are ethernet bridging and have precreated a
@@ -48,6 +49,7 @@ dh {{openvpn_keydir}}/dh{{openvpn_key_size}}.pem
 {% if openvpn_tls_auth -%}
 # Use a static pre-shared key (PSK)
 tls-auth {{ openvpn_keydir }}/{{ openvpn_tls_key }} 0
+key-direction 0
 tls-server
 {% endif %}
 
