@@ -1,11 +1,11 @@
 - hosts:
-    ubuntu_router
-    #ubuntu_router_lan
+    #ubuntu_router
+    ubuntu_router_lan
   become: yes
 
   roles:
   - ../roles/openvpn
-  - ../../ansible-ubuntu-router/roles/ubuntuAddLoginUser
+  #- ../../ansible-ubuntu-router/roles/ubuntuAddLoginUser
 
   vars:
     openvpn_use_pam: yes
