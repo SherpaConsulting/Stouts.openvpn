@@ -5,18 +5,11 @@
 
   roles:
   - ../roles/openvpn
-  #- ../../ansible-ubuntu-router/roles/ubuntuAddLoginUser
 
   vars:
     openvpn_use_pam: yes
     openvpn_clients: "{{ ibm_open_vpn_users }}"
     openvpn_use_pam_users: "{{ ibm_open_vpn_pam_users }}"
+    box_user: "user"
+    box_pass: "pass"
 
-  vars_prompt:
-    - name: "box_user"
-      prompt: "Enter Sherpa Box user"
-      private: no
-
-    - name: "box_pass"
-      prompt: "Enter Sherpa Box pass"
-      private: yes
