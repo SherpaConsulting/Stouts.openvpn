@@ -6,10 +6,11 @@
   roles:
   - ../roles/openvpn
 
+
   vars:
     openvpn_use_pam: yes
-    openvpn_clients: "{{ ibm_open_vpn_users }}"
-    openvpn_use_pam_users: "{{ ibm_open_vpn_pam_users }}"
-    box_user: "user"
-    box_pass: "pass"
-
+    openvpn_clients: "{{ open_vpn_users }}"
+    openvpn_use_pam_users: "{{ open_vpn_pam_users }}"
+    vault_file_path: ../../ansible-inventory/sherpa/encrypted/openvpn.yml
+    openvpn_server_options:
+      - push "route {{ vlan_default_gw }} {{ vlan_netmask }}"

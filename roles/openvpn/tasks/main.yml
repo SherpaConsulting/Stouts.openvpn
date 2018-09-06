@@ -4,7 +4,7 @@
   when: openvpn_enabled
   tags: [openvpn]
 
-- name: Export client keys to Sherpa Box
-  command: curl -u {{ box_user }}:{{ box_pass }} -T {{ openvpn_keydir }}/{{ item }}.ovpn  https://dav.box.com/dav/Kunde/DSB/teknisk/keys/open_vpn_keys/
-  with_items: "{{ openvpn_clients }}"
-  tags: [clients]
+#- name: Export client keys to Sherpa Box
+#  command: curl -u {{ box_user }}:{{ box_pass }} -T {{ openvpn_keydir }}/{{ item }}.ovpn  https://dav.box.com/dav/Kunde/DSB/teknisk/keys/open_vpn_keys/
+#  with_items: "{{ openvpn_clients }}"
+#  tags: [clients]
