@@ -11,6 +11,6 @@
     openvpn_use_pam: yes
     openvpn_clients: "{{ open_vpn_users }}"
     openvpn_use_pam_users: "{{ open_vpn_pam_users }}"
-    vault_file_path: ../../ansible-inventory/sherpa/encrypted/openvpn.yml
+    vault_file_path: ../../ansible-inventory/DSB/encrypted/openvpn.yml
     openvpn_server_options:
       - push "route {{ vlan_default_gw }} {{ vlan_netmask }}"

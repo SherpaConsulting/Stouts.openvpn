@@ -70,6 +70,7 @@
 - name: Configure users
   htpasswd: path={{openvpn_etcdir}}/users name={{item.name}} password={{item.password}} crypt_scheme=des_crypt
   with_items: "{{ openvpn_use_pam_users }}"
+  no_log: True
 
 - name: Setup LDAP
   template: src=auth-ldap.conf.j2 dest=/etc/openvpn/auth-ldap.conf
@@ -92,3 +93,15 @@
 
 - name: Set ip forwarding in the sysctl file and reload if necessary
   sysctl: name="net.ipv4.ip_forward" value=1 sysctl_set=yes state=present reload=yes
+
+- name: add linux users with ssh keys
+  user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    create_home: yes
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+  with_items: "{{ openvpn_use_pam_users }}"
+  no_log: True
+  tags: [create-users]
