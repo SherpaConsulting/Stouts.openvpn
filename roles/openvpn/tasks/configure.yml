@@ -94,14 +94,33 @@
 - name: Set ip forwarding in the sysctl file and reload if necessary
   sysctl: name="net.ipv4.ip_forward" value=1 sysctl_set=yes state=present reload=yes
 
+- name: create encrypted pass
+  shell: python2.7 -c 'import crypt; print crypt.crypt("{{ item.password }}", "$1$SomeMaksMekkerSalt$")'
+  register: "out"
+  with_items: "{{ openvpn_use_pam_users }}"
+  no_log: True
+  tags: [create-users,set-password]
+
 - name: add linux users with ssh keys
   user:
-    name: "{{ item.name }}"
-    password: "{{ item.password }}"
+    name: "{{ item.item.name }}"
     create_home: yes
     generate_ssh_key: yes
+    password: "{{ item.stdout }}"
+    update_password: on_create
     ssh_key_bits: 2048
     ssh_key_file: .ssh/id_rsa
+  with_items: "{{ out.results }}"
+  no_log: True
+  tags: [create-users]
+
+- name: enable prev command search for users
+  template:
+    src: inputrc.conf.j2
+    dest: /home/{{ item.name }}/.inputrc
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: u=rw,g=r,o=r
   with_items: "{{ openvpn_use_pam_users }}"
   no_log: True
   tags: [create-users]
