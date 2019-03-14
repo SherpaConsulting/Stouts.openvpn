@@ -1,7 +1,4 @@
 ---
-- include_vars: "{{ vault_file_path }}" #encrypted
-  tags: [create-users,set-password]
-
 - name: Add OpenVPN repo GPG key
   apt_key:
     id: E158C569

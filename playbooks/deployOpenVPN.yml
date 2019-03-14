@@ -10,6 +10,7 @@
   vars:
     openvpn_use_pam: yes
     openvpn_clients: "{{ open_vpn_users }}"
+    openvpn_clients_revoke: []
     openvpn_use_pam_users: "{{ open_vpn_pam_users }}"
     vault_file_path: "{{ encrypt_home }}/openvpn.yml"
     openvpn_server_options:

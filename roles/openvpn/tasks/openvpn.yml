@@ -1,4 +1,6 @@
 ---
+- include_vars: "{{ vault_file_path }}" #encrypted
+  tags: [create-users,set-password,clients-revoke, configure]
 
 - name: Include OS-specific variables.
   include_vars: "{{item}}"
@@ -17,6 +19,7 @@
   when: ansible_os_family == 'RedHat'
 
 - include: configure.yml
+  tags: [configure]
 
 - include: setup-bridge.yml
 
